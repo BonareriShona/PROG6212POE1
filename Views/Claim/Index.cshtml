@@ -1,0 +1,55 @@
+﻿@model IEnumerable<CMCSWeb.Models.Claim>
+
+@{
+    ViewData["Title"] = "Claims";
+}
+
+<h2>Claims</h2>
+
+<p>
+    <a asp-action="Create" class="btn btn-success">Submit New Claim</a>
+</p>
+
+<table class="table table-bordered table-striped">
+    <thead>
+        <tr>
+            <th>Lecturer ID</th>
+            <th>Hours Worked</th>
+            <th>Hourly Rate</th>
+            <th>Total Amount</th>
+            <th>Status</th>
+            <th>Verified</th>
+            <th>Approved</th>
+            <th>Supporting Document</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var claim in Model)
+        {
+            <tr>
+                <td>@claim.LecturerId</td>
+                <td>@claim.HoursWorked</td>
+                <td>@claim.HourlyRate</td>
+                <td>@claim.TotalAmount</td>
+                <td>@claim.Status</td>
+                <td>@(claim.IsVerified ? "Yes" : "No")</td>
+                <td>@(claim.IsApproved ? "Yes" : "No")</td>
+                <td>
+                    @if (!string.IsNullOrEmpty(claim.SupportingDocumentPath))
+                    {
+                        <span>@claim.SupportingDocumentPath</span>
+                    }
+                    else
+                    {
+                        <span>No file</span>
+                    }
+                </td>
+                <td>
+                    <a asp-action="Verify" asp-route-id="@claim.ClaimId" class="btn btn-warning btn-sm">Verify</a>
+                    <a asp-action="Approve" asp-route-id="@claim.ClaimId" class="btn btn-primary btn-sm">Approve</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
