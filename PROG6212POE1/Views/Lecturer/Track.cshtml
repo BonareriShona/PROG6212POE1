@@ -1,0 +1,87 @@
+﻿@model IEnumerable<CMCSWeb.Models.Claim>
+
+@{
+    ViewData["Title"] = "Track Claims";
+}
+
+<div class="container mt-5">
+    <h2 class="mb-4 text-primary">Track My Claims</h2>
+
+    @if (!Model.Any())
+    {
+        <div class="alert alert-info">No claims have been submitted yet.</div>
+    }
+    else
+    {
+        <table class="table table-bordered table-striped shadow-sm">
+            <thead class="table-light">
+                <tr>
+                    <th>Lecturer</th>
+                    <th>Hours</th>
+                    <th>Rate (R)</th>
+                    <th>Total (R)</th>
+                    <th>Submitted At</th>
+                    <th>Status</th>
+                    <th>Progress</th>
+                    <th>Document</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var claim in Model)
+                {
+                    <tr>
+                        <td>@claim.LecturerName</td>
+                        <td>@claim.HoursWorked</td>
+                        <td>@claim.HourlyRate</td>
+                        <td>@(claim.HoursWorked * (double)claim.HourlyRate)</td>
+                        <td>@claim.SubmittedAt.ToShortDateString()</td>
+                        <td>
+                            @switch (claim.Status)
+                            {
+                                case CMCSWeb.Models.ClaimStatus.Pending:
+                                    <span class="badge bg-warning text-dark">Pending</span>
+                                    break;
+                                case CMCSWeb.Models.ClaimStatus.Verified:
+                                    <span class="badge bg-info text-dark">Verified</span>
+                                    break;
+                                case CMCSWeb.Models.ClaimStatus.Approved:
+                                    <span class="badge bg-success">Approved</span>
+                                    break;
+                                case CMCSWeb.Models.ClaimStatus.Rejected:
+                                    <span class="badge bg-danger">Rejected</span>
+                                    break;
+                            }
+                    </td>
+                    <td>
+                        <div class="progress">
+                            <div class="progress-bar
+                                        @(claim.Status == CMCSWeb.Models.ClaimStatus.Pending ? "bg-warning" :
+                                                                       claim.Status == CMCSWeb.Models.ClaimStatus.Verified ? "bg-info" :
+                                                                       claim.Status == CMCSWeb.Models.ClaimStatus.Approved ? "bg-success" :
+                                                                       "bg-danger")
+                                    " role="progressbar"
+                             style="width:@(
+                                                                     claim.Status == CMCSWeb.Models.ClaimStatus.Pending ? 25 :
+                                                                     claim.Status == CMCSWeb.Models.ClaimStatus.Verified ? 50 :
+                                                                     claim.Status == CMCSWeb.Models.ClaimStatus.Approved ? 100 :
+                                                                     100
+                                                                        )% ">
+                            </div>
+                        </div>
+                    </td>
+                    <td>
+                    @if (!string.IsNullOrEmpty(claim.DocumentPath))
+                            {
+                                <a href="@Url.Content("~/uploads/" + claim.DocumentPath)" target="_blank">View</a>
+                            }
+                            else
+                            {
+                                <span>No file</span>
+                            }
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    }
+</div>

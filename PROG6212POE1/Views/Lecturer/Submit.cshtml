@@ -1,0 +1,56 @@
+﻿@model CMCSWeb.Models.Claim
+@{
+    ViewData["Title"] = "Submit Claim";
+}
+
+<div class="container mt-5">
+    <h2 class="mb-4 text-primary">Submit Monthly Claim</h2>
+
+    <!-- Success Message -->
+    @if (TempData["SuccessMessage"] != null)
+    {
+        <div class="alert alert-success">@TempData["SuccessMessage"]</div>
+    }
+
+    <!-- Claim Submission Form -->
+    <form asp-controller="Lecturer" asp-action="Submit" method="post" enctype="multipart/form-data" class="border p-4 rounded shadow-sm bg-light">
+        <div class="mb-3">
+            <label asp-for="LecturerName" class="form-label fw-semibold"></label>
+            <input asp-for="LecturerName" class="form-control" />
+            <span asp-validation-for="LecturerName" class="text-danger"></span>
+        </div>
+
+        <div class="mb-3">
+            <label asp-for="HoursWorked" class="form-label fw-semibold"></label>
+            <input asp-for="HoursWorked" class="form-control" type="number" step="0.1" />
+            <span asp-validation-for="HoursWorked" class="text-danger"></span>
+        </div>
+
+        <div class="mb-3">
+            <label asp-for="HourlyRate" class="form-label fw-semibold"></label>
+            <input asp-for="HourlyRate" class="form-control" type="number" step="0.01" />
+            <span asp-validation-for="HourlyRate" class="text-danger"></span>
+        </div>
+
+        <div class="mb-3">
+            <label asp-for="Notes" class="form-label fw-semibold"></label>
+            <textarea asp-for="Notes" class="form-control"></textarea>
+            <span asp-validation-for="Notes" class="text-danger"></span>
+        </div>
+
+        <div class="mb-3">
+            <label class="form-label fw-semibold">Upload Supporting Document (Optional, .pdf, .docx, .xlsx, .jpeg)</label>
+            <input type="file" name="document" class="form-control" />
+            <span asp-validation-for="DocumentPath" class="text-danger"></span>
+        </div>
+
+        <button type="submit" class="btn btn-primary w-100 mt-3">Submit Claim</button>
+    </form>
+</div>
+
+@section Scripts {
+    <!-- jQuery and validation scripts for client-side validation -->
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/jquery-validation/dist/jquery.validate.min.js"></script>
+    <script src="~/lib/jquery-validation-unobtrusive/dist/jquery.validate.unobtrusive.min.js"></script>
+}

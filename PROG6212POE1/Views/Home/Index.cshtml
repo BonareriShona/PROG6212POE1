@@ -1,0 +1,59 @@
+﻿@{
+    ViewData["Title"] = "Home";
+}
+
+<div class="container text-center mt-5">
+    <h1 class="display-5 fw-semibold text-primary mb-3">
+        Contract Monthly Claim System (CMCS)
+    </h1>
+
+    <p class="lead text-muted mb-5">
+        Welcome! Please select your role to proceed.
+    </p>
+
+    <div class="row justify-content-center">
+        <!-- Lecturer – Submit Claim -->
+        <div class="col-md-3">
+            <a asp-controller="Lecturer" asp-action="Submit" class="btn btn-lg btn-primary w-100 mb-3">
+                Lecturer – Submit Claim
+            </a>
+        </div>
+
+        <!-- Coordinator – Verify Claims -->
+        <div class="col-md-3">
+            <a asp-controller="Coordinator" asp-action="Manage" class="btn btn-lg btn-success w-100 mb-3">
+                Coordinator – Verify Claims
+            </a>
+        </div>
+
+        <!-- Lecturer – Track Claim Status -->
+        <div class="col-md-3">
+            <a asp-controller="Lecturer" asp-action="Track" class="btn btn-lg btn-warning w-100 mb-3">
+                Lecturer – Track Claim Status
+            </a>
+        </div>
+    </div>
+
+    <div class="row justify-content-center mt-4">
+        <!-- Manager – Approve Claims -->
+        <div class="col-md-3">
+            <a asp-controller="Manager" asp-action="Manage" class="btn btn-lg btn-info w-100 mb-3">
+                Manager – Approve Claims
+            </a>
+        </div>
+
+        <!-- About Page -->
+        <div class="col-md-3">
+            <a asp-controller="Home" asp-action="About" class="btn btn-lg btn-secondary w-100 mb-3">
+                About CMCS
+            </a>
+        </div>
+
+        <!-- Help Page -->
+        <div class="col-md-3">
+            <a asp-controller="Home" asp-action="Help" class="btn btn-lg btn-dark w-100 mb-3">
+                Help & Support
+            </a>
+        </div>
+    </div>
+</div>
